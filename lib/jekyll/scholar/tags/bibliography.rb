@@ -42,7 +42,7 @@ module Jekyll
           content_tag :li, reference
         }.join("\n")
 
-        content_tag :ol, bibliography, :class => config['bibliography_class']
+        content_tag :ul, bibliography, :class => config['bibliography_class']
       end
     end
 
