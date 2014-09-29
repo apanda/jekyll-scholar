@@ -8,7 +8,6 @@ module Jekyll
         super
 
         @config = Scholar.defaults.dup
-
         optparse(arguments)
       end
 
@@ -31,18 +30,6 @@ module Jekyll
 
         items = items.take(max.to_i) if limit_entries?
 
-        #bibliography = items.each_with_index.map { |entry, index|
-          #reference = bibliography_tag(entry, index + 1)
-          ##puts entry['year']
-          ##puts reference
-          #if generate_details?
-            #reference << link_to(details_link_for(entry),
-              #config['details_link'], :class => config['details_link_class'])
-          #end
-
-          ##content_tag :li, reference
-        #}#.join("\n")
-
         bib_by_year = {}
         items.each_with_index.each { |entry, index|
           reference = bibliography_tag(entry, index + 1)
@@ -57,9 +44,13 @@ module Jekyll
 
         bib_by_year.keys.sort{|a, b| a < b ? 1 : -1 }.map {|k|
             list_of_li = bib_by_year[k].join("\n")
+            li_content = content_tag(:ul, list_of_li,:class => config['bibliography_class'])
+            if show_year?
+                content_tag(:h2, k.to_s) +  li_content
+            else
+                li_content
+            end
 
-            content_tag(:h2, k.to_s) + 
-            content_tag(:ul, list_of_li,:class => config['bibliography_class'])
         }.join("\n")
 
       end

@@ -34,6 +34,10 @@ module Jekyll
             @cited = true
           end
 
+          opts.on('-y', '--year') do |year|
+            @year = true
+          end
+
           opts.on('-C', '--cited_in_order') do |cited|
             @cited, @skip_sort = true, true
           end
@@ -72,7 +76,7 @@ module Jekyll
           end
         end
 
-        argv = arguments.split(/(\B-[cCfqptTslm]|\B--(?:cited(_in_order)?|file|query|prefix|text|style|template|locator|max|))/)
+        argv = arguments.split(/(\B-[cCfqptTslmy]|\B--(?:cited(_in_order)?|file|query|prefix|text|style|template|locator|max|year|))/)
 
         parser.parse argv.map(&:strip).reject(&:empty?)
       end
@@ -172,6 +176,10 @@ module Jekyll
 
       def cited_only?
         !!@cited
+      end
+
+      def show_year?
+        !!@year
       end
 
       def skip_sort?
