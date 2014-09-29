@@ -33,6 +33,8 @@ module Jekyll
 
         bibliography = items.each_with_index.map { |entry, index|
           reference = bibliography_tag(entry, index + 1)
+          puts entry['year']
+          puts reference
 
           if generate_details?
             reference << link_to(details_link_for(entry),
